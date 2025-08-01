@@ -1,28 +1,35 @@
 ---
-import { useState } from 'preact/hooks'
+import { useState } from 'preact/hooks';
 
-let voltData = {}
-try {
-  const res = await fetch('/api/memory')
-  voltData = await res.json()
-} catch (err) {
-  voltData = { error: 'Failed to load memory.' }
-}
+const [memory, setMemory] = useState('');
+const [status, setStatus] = useState('');
 ---
 
-<html>
-  <head>
-    <title>Volt Memory Editor</title>
-  </head>
-  <body>
-    <h1>🧠 Volt Memory Editor</h1>
+<textarea
+  value={memory}
+  onInput={(e) => setMemory(e.target.value)}
+  placeholder="Type your memory here..."
+></textarea>
 
-    <form method="POST" action="/api/memory">
-      <textarea name="memory" rows="30" cols="80">{JSON.stringify(voltData, null, 2)}</textarea>
-      <br />
-      <button type="submit">💾 Save Memory</button>
-    </form>
+<button
+  onClick={async () => {
+    setStatus("Saving...");
+    const res = await fetch('/api/save-memory', {
+      method: 'POST',
+      headers: {
+        'Content-Type': 'application/json'
+      },
+      body: JSON.stringify({ memory })
+    });
 
-    <p><a href="/dashboard">← Back to Dashboard</a></p>
-  </body>
-</html>
+    if (res.ok) {
+      setStatus("✅ Saved!");
+    } else {
+      setStatus("❌ Error saving.");
+    }
+  }}
+>
+  Save Memory
+</button>
+
+<p>{status}</p>
