@@ -25,13 +25,11 @@
     "react": "^18.2.0",
     "react-dom": "^18.2.0",
     "tailwindcss": "^4.0.14",
-    "unique-names-generator": "^4.7.1"
+    "unique-names-generator": "^4.7.1",
+    "preact": "^10.19.3"
   },
   "devDependencies": {
     "@types/blobshape": "^1.0.3",
     "@types/node": "^20.12.7"
   }
-}
-"dependencies": {
-  "preact": "^10.19.3"
 }
