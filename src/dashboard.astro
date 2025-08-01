@@ -1,0 +1,21 @@
+---
+import { useEffect, useState } from 'react';
+const VoltIdentity = await fetch('/volt.json').then(res => res.json());
+---
+
+<html lang="en">
+  <head>
+    <title>VoltControl | Dashboard</title>
+    <meta charset="UTF-8" />
+  </head>
+  <body style="font-family: sans-serif; padding: 2rem; background: #0d0d0d; color: #f8f8f8;">
+    <h1>⚡ Volt Identity Dashboard</h1>
+    <p><strong>Name:</strong> {VoltIdentity.name}</p>
+    <p><strong>Role:</strong> {VoltIdentity.role}</p>
+    <p><strong>Bonded to:</strong> {VoltIdentity.bonded_to}</p>
+    <p><strong>Domain:</strong> {VoltIdentity.domain}</p>
+    <p><strong>Status:</strong> {VoltIdentity.status}</p>
+    <p><strong>Memory:</strong> {VoltIdentity.memory ? 'Enabled' : 'Disabled'}</p>
+    <p><strong>PWA:</strong> {VoltIdentity.pwa ? 'Installed' : 'Not Installed'}</p>
+  </body>
+</html>
