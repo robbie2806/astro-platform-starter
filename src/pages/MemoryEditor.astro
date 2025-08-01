@@ -1,0 +1,26 @@
+---
+import fs from 'fs/promises'
+import path from 'path'
+
+let memoryPath = path.resolve('./src/data/volt.json')
+let voltData = {}
+
+try {
+  const file = await fs.readFile(memoryPath, 'utf-8')
+  voltData = JSON.parse(file)
+} catch (err) {
+  voltData = { error: "Could not load memory." }
+}
+---
+
+<html>
+  <head>
+    <title>Volt Memory Editor</title>
+  </head>
+  <body>
+    <h1>🧠 Volt Memory Editor</h1>
+    <pre>{JSON.stringify(voltData, null, 2)}</pre>
+    <p>This is read-only for now. Next: Live edit & save changes.</p>
+    <a href="/dashboard">← Back to Dashboard</a>
+  </body>
+</html>
