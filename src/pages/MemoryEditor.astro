@@ -1,15 +1,12 @@
 ---
-import fs from 'fs/promises'
-import path from 'path'
+import { useState } from 'preact/hooks'
 
-let memoryPath = path.resolve('./src/data/volt.json')
 let voltData = {}
-
 try {
-  const file = await fs.readFile(memoryPath, 'utf-8')
-  voltData = JSON.parse(file)
+  const res = await fetch('/api/memory')
+  voltData = await res.json()
 } catch (err) {
-  voltData = { error: "Could not load memory." }
+  voltData = { error: 'Failed to load memory.' }
 }
 ---
 
@@ -19,8 +16,13 @@ try {
   </head>
   <body>
     <h1>🧠 Volt Memory Editor</h1>
-    <pre>{JSON.stringify(voltData, null, 2)}</pre>
-    <p>This is read-only for now. Next: Live edit & save changes.</p>
-    <a href="/dashboard">← Back to Dashboard</a>
+
+    <form method="POST" action="/api/memory">
+      <textarea name="memory" rows="30" cols="80">{JSON.stringify(voltData, null, 2)}</textarea>
+      <br />
+      <button type="submit">💾 Save Memory</button>
+    </form>
+
+    <p><a href="/dashboard">← Back to Dashboard</a></p>
   </body>
 </html>
