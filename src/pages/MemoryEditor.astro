@@ -1,35 +1,7 @@
 ---
-import { useState } from 'preact/hooks';
-
-const [memory, setMemory] = useState('');
-const [status, setStatus] = useState('');
+import MemoryEditor from '../components/MemoryEditor.jsx';
 ---
 
-<textarea
-  value={memory}
-  onInput={(e) => setMemory(e.target.value)}
-  placeholder="Type your memory here..."
-></textarea>
-
-<button
-  onClick={async () => {
-    setStatus("Saving...");
-    const res = await fetch('/api/save-memory', {
-      method: 'POST',
-      headers: {
-        'Content-Type': 'application/json'
-      },
-      body: JSON.stringify({ memory })
-    });
-
-    if (res.ok) {
-      setStatus("✅ Saved!");
-    } else {
-      setStatus("❌ Error saving.");
-    }
-  }}
->
-  Save Memory
-</button>
-
-<p>{status}</p>
+<React>
+  <MemoryEditor />
+</React>
